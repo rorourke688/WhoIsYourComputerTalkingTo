@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home'
+    'django_celery_beat',
+    'home',
+    'sniffer'
 ]
 
 MIDDLEWARE = [
