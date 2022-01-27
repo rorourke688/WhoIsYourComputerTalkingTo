@@ -8,32 +8,36 @@ class Server(models.Model):
  ip_address = models.CharField(max_length=255, unique=True)
  country = models.CharField(max_length=255, null=True)
  city = models.CharField(max_length=255, null=True)
- latitude = models.FloatField()
- longitude = models.FloatField()
+ latitude = models.FloatField(null=True)
+ longitude = models.FloatField(null=True)
  hostname = models.CharField(max_length=255, null=True)
+ asn = models.CharField(max_length=255, null=True)
+ org = models.CharField(max_length=255, null=True)
+ region = models.CharField(max_length=255, null=True)
+ publicServer = models.BooleanField(default=True, null=True)
 
-###### following tables should be cleaned after each session  ########
+class DomainNames(models.Model):
+  ip_address_fk = models.ForeignKey(Server, on_delete=models.CASCADE, null=True)
+  domain_name = models.CharField(max_length=255, null=True)
+  black_list_occur =  models.PositiveIntegerField(null=True)
+  white_list_occur =  models.PositiveIntegerField(null=True)
 
-# domain names seen in a session relating to a particular server
-class ServerDomains(models.Model):
- ip_address = models.CharField(max_length=255)
- domainName = models.CharField(max_length=255)
+class ServersEncounteredInSession(models.Model):
+  ip_address_fk = models.ForeignKey(Server, on_delete=models.CASCADE, null=True)
+  occurrences =  models.BigIntegerField(default=0)
+  tcp_count = models.BigIntegerField(default=0)
+  udp_count = models.BigIntegerField(default=0)
+  total_bytes_sent = models.BigIntegerField(default=0)
 
 # all the netowrk traffic seen in a session
 class NetworkTraffic(models.Model):
- PROTOCOL_DEFAULT = -1
- PROTOCOL_UDP = 17
- PROTOCOL_TCP = 6
- 
- PROTOCOL_CHOICES = [
-  (PROTOCOL_TCP, 'TCP'),
-  (PROTOCOL_UDP, 'UDP'),
-  (PROTOCOL_DEFAULT, 'NONE')
- ]
+ PROTOCOL_UDP = 'UDP'
+ PROTOCOL_TCP = 'TCP'
+ PROTOCOL_NOTLISTED = 'NOT LISTED'
 
  source_address_fk = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='source', null=True)
  destination_Address_fk = models.ForeignKey(Server, on_delete=models.CASCADE, related_name='destination', null=True)
- protocol = models.CharField(choices=PROTOCOL_CHOICES, default=PROTOCOL_DEFAULT, max_length=255)
+ protocol = models.CharField(max_length=255)
  length_Bytes = models.PositiveIntegerField()
  schedule_number = models.BigIntegerField()
  

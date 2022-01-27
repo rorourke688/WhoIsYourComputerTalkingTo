@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "88bd6038663e3e33f17b5233216d7bef493f80c8b566bc1b2098ffbb50b3604d"
+            "sha256": "851330ec3f55c6fb02731433c1ae6307390ca8b39efb2fbae7ddb75f182e921d"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -31,6 +31,14 @@
             ],
             "index": "pypi",
             "version": "==4.0.1"
+        },
+        "django-geojson": {
+            "hashes": [
+                "sha256:374a89500b222c1f561d4bc218c99a80877aac8b8cd9f0b48439549abd784980",
+                "sha256:c895500ca6045560135dd0a67acb91d51a7692727362b31106abc01918f5f34d"
+            ],
+            "index": "pypi",
+            "version": "==3.2.0"
         },
         "scapy": {
             "hashes": [

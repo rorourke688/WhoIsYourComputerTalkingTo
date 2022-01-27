@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Our Map</title>
+   
+
+   <!-- leaflet css-->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+   <style>
+     #map {
+      width: 100%;
+      height: 50vh;
+     }
+
+     #table {
+        table-layout: auto;
+        width: 100%;
+        border-collapse: collapse;
+        border: 3px solid purple;
+      }
+
+      #table_heading{
+        text-align: left;
+      }
+   </style>
+
+   <script>
+     $(document).ready(function(){
+       $("button").click(function(){
+              $.ajax({
+                type:'GET',
+                url: "{% url 'deleteAllRowsInNetworkTraffic'%}",
+                responseType: 'json',
+                success: function(response){
+                  alert('Network traffic stored in database has been deleted')
+                },
+                error: function(response){
+                  alert('error getting all the servers');
+                }
+            })
+        })
+     })
+
+   </script>
+
+</head>
+<body>   
+
+  <h2>This page shows the locations of servers responsible for network traffic</h2>
+  <button>Delete All Network Data captured</button>
+  <div id="map"></div>
+
+        <table id="table" class="table">
+          <thead>
+            <tr>
+              <th id="table_heading">HostName</th>
+              <th id="table_heading">Country</th>
+              <th id="table_heading">City</th>
+              <th id="table_heading">Occurences</th>
+              <th id="table_heading">TCP</th>
+              <th id="table_heading">UDP</th>
+              <th id="table_heading">Total Bytes Sent</th>
+            </tr>
+          </thead>
+            <tbody>
+              {% for s in servers %}
+              <tr>
+                <td>{{s.hostname}}</td>
+                <td>{{s.country}}</td>
+                <td>{{s.city}}</td>
+                <td>{{s.occurrences}}</td>
+                <td>{{s.tcp_count}}</td>
+                <td>{{s.udp_count}}</td>
+                <td>{{s.total_bytes_sent}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+</body>
+</html>
+
+
+ <!-- leaflet js-->
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+ <script>
+   // map initilization laat, long
+   var map = L.map('map').setView([39.1028, -94.5778], 2);
+   var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+   });
+
+   googleStreets.addTo(map)
+
+  var markers = [];
+  var markersLayer = new L.LayerGroup();
+  markersLayer.addTo(map)
+
+var f = function(){
+
+   setInterval(function(){
+     $.ajax({
+      type:'GET',
+      url: "{% url 'getNewServerTraffic'%}",
+      responseType: 'json',
+      success: function(response){
+        
+        console.log(response)
+        // celaring the table and the map
+        markersLayer.clearLayers();
+        var table = document.getElementById("table")
+
+        while(table.rows.length > 1){
+          table.deleteRow(1)
+        }
+        
+        //$('#table_id tbody').remove();
+        for(var key in response.servers){
+         var hostname = response.servers[key].hostname
+         var country = response.servers[key].country
+         var city = response.servers[key].city
+         var occurrences = response.servers[key].occurrences
+         var tcp_count = response.servers[key].tcp_count
+         var udp_count = response.servers[key].udp_count
+         var total_bytes_sent = response.servers[key].total_bytes_sent
+
+         var row = table.insertRow(1);
+
+         var cell_hostname = row.insertCell(0);
+         cell_hostname.innerHTML = hostname;
+
+         var cell_country = row.insertCell(1);
+         cell_country.innerHTML = country;
+
+         var cell_city = row.insertCell(2);
+         cell_city.innerHTML = city;
+
+         var cell_occurrences = row.insertCell(3);
+         cell_occurrences.innerHTML = occurrences;
+
+         var cell_tcp_count = row.insertCell(4);
+         cell_tcp_count.innerHTML = tcp_count;
+
+         var cell_udp_count = row.insertCell(5);
+         cell_udp_count.innerHTML = udp_count;
+
+         var cell_total_bytes_sent = row.insertCell(6);
+         cell_total_bytes_sent.innerHTML = total_bytes_sent;
+
+         var lat = response.servers[key].latitude
+         var long = response.servers[key].longitude
+         var m = L.marker([lat, long])
+         markersLayer.addLayer(m); 
+       }
+      },
+      error: function(response){
+       alert('error getting all the servers');
+      }
+     })
+   }, 5000);
+  } 
+
+
+  $(document).ready(f());
+
+ </script>
