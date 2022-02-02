@@ -1,0 +1,162 @@
+1643766805223	geckodriver	INFO	Listening on 127.0.0.1:60852
+1643766805796	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--remote-debugging-port" "60853" "-foreground" "-no-remote" "-profile" "/var/folders/6p/wwmthqnd7kn80hqkx5xgr5y00000gn/T/rust_mozprofileO9NNLW"
+1643766806027	Marionette	INFO	Marionette enabled
+2022-02-02 01:53:26.673 firefox-bin[24824:11353886] Warning: Expected min height of view: (<NSButton: 0x121435000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:53:26.673 firefox-bin[24824:11353886] Warning: Expected min height of view: (<NSButton: 0x121489400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:53:26.674 firefox-bin[24824:11353886] Warning: Expected min height of view: (<NSButton: 0x121489800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:53:26.674 firefox-bin[24824:11353886] Warning: Expected min height of view: (<NSButton: 0x12148ac00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:53:26.675 firefox-bin[24824:11353886] Warning: Expected min height of view: (<NSButton: 0x121489c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:53:26.675 firefox-bin[24824:11353886] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12148bc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:53:26.676 firefox-bin[24824:11353886] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x11e271000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+DevTools listening on ws://localhost:60853/devtools/browser/951b6997-77fc-431e-8e60-7e7bbd4a88e9
+1643766807666	Marionette	INFO	Listening on port 60860
+console.error: BackgroundUpdate: 
+  _reasonsToNotScheduleUpdates: Failed to check for Maintenance Service Registry Key: [Exception... "Component returned failure code: 0x80004001 (NS_ERROR_NOT_IMPLEMENTED) [nsIUpdateProcessor.getServiceRegKeyExists]"  nsresult: "0x80004001 (NS_ERROR_NOT_IMPLEMENTED)"  location: "JS frame :: resource://gre/modules/BackgroundUpdate.jsm :: _reasonsToNotScheduleUpdates :: line 243"  data: no]
+2022-02-02 01:53:27.693 plugin-container[24840:11354261] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:53:27.693 plugin-container[24840:11354261] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 01:53:27.704 plugin-container[24840:11354261] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:53:27.704 plugin-container[24840:11354261] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 01:53:27.704 plugin-container[24840:11354271] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:53:27.704 plugin-container[24840:11354271] nil host used in call to allowsAnyHTTPSCertificateForHost:
+1643766807753	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.amazon.co.uk/ line 2170 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1643766969966	geckodriver	INFO	Listening on 127.0.0.1:61045
+1643766970214	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--remote-debugging-port" "61046" "-foreground" "-no-remote" "-profile" "/var/folders/6p/wwmthqnd7kn80hqkx5xgr5y00000gn/T/rust_mozprofileROobtG"
+1643766970417	Marionette	INFO	Marionette enabled
+2022-02-02 01:56:11.082 firefox-bin[26001:11366819] Warning: Expected min height of view: (<NSButton: 0x120fa9800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:11.082 firefox-bin[26001:11366819] Warning: Expected min height of view: (<NSButton: 0x128fc7000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:11.083 firefox-bin[26001:11366819] Warning: Expected min height of view: (<NSButton: 0x128fc5400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:11.083 firefox-bin[26001:11366819] Warning: Expected min height of view: (<NSButton: 0x128fc5800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:11.084 firefox-bin[26001:11366819] Warning: Expected min height of view: (<NSButton: 0x128fc5c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:11.084 firefox-bin[26001:11366819] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x128fc7800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:11.085 firefox-bin[26001:11366819] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1231ea800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+DevTools listening on ws://localhost:61046/devtools/browser/77b0de46-45dc-4f23-9b16-8a453cff56a5
+1643766972037	Marionette	INFO	Listening on port 61051
+2022-02-02 01:56:12.045 plugin-container[26021:11367193] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:56:12.046 plugin-container[26021:11367193] nil host used in call to allowsAnyHTTPSCertificateForHost:
+console.error: BackgroundUpdate: 
+  _reasonsToNotScheduleUpdates: Failed to check for Maintenance Service Registry Key: [Exception... "Component returned failure code: 0x80004001 (NS_ERROR_NOT_IMPLEMENTED) [nsIUpdateProcessor.getServiceRegKeyExists]"  nsresult: "0x80004001 (NS_ERROR_NOT_IMPLEMENTED)"  location: "JS frame :: resource://gre/modules/BackgroundUpdate.jsm :: _reasonsToNotScheduleUpdates :: line 243"  data: no]
+2022-02-02 01:56:12.049 plugin-container[26021:11367193] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:56:12.049 plugin-container[26021:11367193] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 01:56:12.049 plugin-container[26021:11367211] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:56:12.049 plugin-container[26021:11367211] nil host used in call to allowsAnyHTTPSCertificateForHost:
+1643766972078	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.amazon.co.uk/ line 2118 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: uncaught exception: Resource call aborted
+1643767012452	geckodriver	INFO	Listening on 127.0.0.1:61197
+1643767012697	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--remote-debugging-port" "61198" "-foreground" "-no-remote" "-profile" "/var/folders/6p/wwmthqnd7kn80hqkx5xgr5y00000gn/T/rust_mozprofileEUaMWL"
+1643767012891	Marionette	INFO	Marionette enabled
+2022-02-02 01:56:53.562 firefox-bin[26368:11371471] Warning: Expected min height of view: (<NSButton: 0x11e311400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:53.563 firefox-bin[26368:11371471] Warning: Expected min height of view: (<NSButton: 0x1262bf400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:53.563 firefox-bin[26368:11371471] Warning: Expected min height of view: (<NSButton: 0x1262c1800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:53.564 firefox-bin[26368:11371471] Warning: Expected min height of view: (<NSButton: 0x1262bec00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:53.564 firefox-bin[26368:11371471] Warning: Expected min height of view: (<NSButton: 0x1262bb400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:53.565 firefox-bin[26368:11371471] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1262bbc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 01:56:53.565 firefox-bin[26368:11371471] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12640d000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+DevTools listening on ws://localhost:61198/devtools/browser/33626f6d-f8af-48d0-affb-4c6f8cc120ae
+2022-02-02 01:56:54.504 plugin-container[26383:11371817] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:56:54.504 plugin-container[26383:11371817] nil host used in call to allowsAnyHTTPSCertificateForHost:
+console.error: BackgroundUpdate: 
+  _reasonsToNotScheduleUpdates: Failed to check for Maintenance Service Registry Key: [Exception... "Component returned failure code: 0x80004001 (NS_ERROR_NOT_IMPLEMENTED) [nsIUpdateProcessor.getServiceRegKeyExists]"  nsresult: "0x80004001 (NS_ERROR_NOT_IMPLEMENTED)"  location: "JS frame :: resource://gre/modules/BackgroundUpdate.jsm :: _reasonsToNotScheduleUpdates :: line 243"  data: no]
+2022-02-02 01:56:54.507 plugin-container[26383:11371817] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:56:54.507 plugin-container[26383:11371817] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 01:56:54.507 plugin-container[26383:11371828] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 01:56:54.507 plugin-container[26383:11371828] nil host used in call to allowsAnyHTTPSCertificateForHost:
+1643767014511	Marionette	INFO	Listening on port 61203
+1643767014555	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.amazon.co.uk/ line 2130 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1643767025850	Marionette	INFO	Stopped listening on port 61203
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1643767200405	geckodriver	INFO	Listening on 127.0.0.1:61355
+1643767201339	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--remote-debugging-port" "61356" "-foreground" "-no-remote" "-profile" "/var/folders/6p/wwmthqnd7kn80hqkx5xgr5y00000gn/T/rust_mozprofileiMTItQ"
+1643767201545	Marionette	INFO	Marionette enabled
+2022-02-02 02:00:02.208 firefox-bin[27205:11380843] Warning: Expected min height of view: (<NSButton: 0x11a1b2400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:00:02.209 firefox-bin[27205:11380843] Warning: Expected min height of view: (<NSButton: 0x12864f400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:00:02.209 firefox-bin[27205:11380843] Warning: Expected min height of view: (<NSButton: 0x12864bc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:00:02.210 firefox-bin[27205:11380843] Warning: Expected min height of view: (<NSButton: 0x128650800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:00:02.210 firefox-bin[27205:11380843] Warning: Expected min height of view: (<NSButton: 0x12864cc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:00:02.211 firefox-bin[27205:11380843] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x128650c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:00:02.211 firefox-bin[27205:11380843] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x117187000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+DevTools listening on ws://localhost:61356/devtools/browser/d21ae28f-8c3f-49ee-a8a8-77a4d7eefe96
+console.error: BackgroundUpdate: 
+  _reasonsToNotScheduleUpdates: Failed to check for Maintenance Service Registry Key: [Exception... "Component returned failure code: 0x80004001 (NS_ERROR_NOT_IMPLEMENTED) [nsIUpdateProcessor.getServiceRegKeyExists]"  nsresult: "0x80004001 (NS_ERROR_NOT_IMPLEMENTED)"  location: "JS frame :: resource://gre/modules/BackgroundUpdate.jsm :: _reasonsToNotScheduleUpdates :: line 243"  data: no]
+1643767203096	Marionette	INFO	Listening on port 61361
+2022-02-02 02:00:03.100 plugin-container[27221:11381193] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:00:03.100 plugin-container[27221:11381193] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 02:00:03.104 plugin-container[27221:11381193] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:00:03.104 plugin-container[27221:11381193] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 02:00:03.104 plugin-container[27221:11381192] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:00:03.104 plugin-container[27221:11381192] nil host used in call to allowsAnyHTTPSCertificateForHost:
+1643767203200	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.amazon.co.uk/ line 2177 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: uncaught exception: Resource call aborted
+1643767213417	Marionette	INFO	Stopped listening on port 61361
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1643767369902	geckodriver	INFO	Listening on 127.0.0.1:61507
+1643767370811	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--remote-debugging-port" "61508" "-foreground" "-no-remote" "-profile" "/var/folders/6p/wwmthqnd7kn80hqkx5xgr5y00000gn/T/rust_mozprofiley8TDub"
+1643767371019	Marionette	INFO	Marionette enabled
+2022-02-02 02:02:51.662 firefox-bin[27983:11389874] Warning: Expected min height of view: (<NSButton: 0x12efa9c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:02:51.663 firefox-bin[27983:11389874] Warning: Expected min height of view: (<NSButton: 0x12efe1c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:02:51.663 firefox-bin[27983:11389874] Warning: Expected min height of view: (<NSButton: 0x12efe4400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:02:51.664 firefox-bin[27983:11389874] Warning: Expected min height of view: (<NSButton: 0x12efe1800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:02:51.664 firefox-bin[27983:11389874] Warning: Expected min height of view: (<NSButton: 0x12efdf400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:02:51.665 firefox-bin[27983:11389874] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12efe6000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:02:51.666 firefox-bin[27983:11389874] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12efa9000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+DevTools listening on ws://localhost:61508/devtools/browser/d932e578-bd42-4ff7-a5ea-483bdc2ef6b1
+2022-02-02 02:02:52.510 plugin-container[27995:11390138] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:02:52.510 plugin-container[27995:11390138] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 02:02:52.514 plugin-container[27995:11390138] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:02:52.514 plugin-container[27995:11390138] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 02:02:52.514 plugin-container[27995:11390149] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:02:52.515 plugin-container[27995:11390149] nil host used in call to allowsAnyHTTPSCertificateForHost:
+1643767372518	Marionette	INFO	Listening on port 61513
+console.error: BackgroundUpdate: 
+  _reasonsToNotScheduleUpdates: Failed to check for Maintenance Service Registry Key: [Exception... "Component returned failure code: 0x80004001 (NS_ERROR_NOT_IMPLEMENTED) [nsIUpdateProcessor.getServiceRegKeyExists]"  nsresult: "0x80004001 (NS_ERROR_NOT_IMPLEMENTED)"  location: "JS frame :: resource://gre/modules/BackgroundUpdate.jsm :: _reasonsToNotScheduleUpdates :: line 243"  data: no]
+1643767372560	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.amazon.co.uk/ line 2118 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1643767383180	Marionette	INFO	Stopped listening on port 61513
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1643767431445	geckodriver	INFO	Listening on 127.0.0.1:61636
+1643767432892	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "--remote-debugging-port" "61637" "-foreground" "-no-remote" "-profile" "/var/folders/6p/wwmthqnd7kn80hqkx5xgr5y00000gn/T/rust_mozprofileTE400z"
+1643767433109	Marionette	INFO	Marionette enabled
+2022-02-02 02:03:53.768 firefox-bin[28206:11391787] Warning: Expected min height of view: (<NSButton: 0x11f3c4c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:03:53.769 firefox-bin[28206:11391787] Warning: Expected min height of view: (<NSButton: 0x11fab7800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:03:53.769 firefox-bin[28206:11391787] Warning: Expected min height of view: (<NSButton: 0x11fab8400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:03:53.770 firefox-bin[28206:11391787] Warning: Expected min height of view: (<NSButton: 0x11fadd800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:03:53.770 firefox-bin[28206:11391787] Warning: Expected min height of view: (<NSButton: 0x11fadc800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:03:53.771 firefox-bin[28206:11391787] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x11fada800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2022-02-02 02:03:53.771 firefox-bin[28206:11391787] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x11c97bc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+DevTools listening on ws://localhost:61637/devtools/browser/e5264f1d-46f1-4a47-8f16-b930d445a462
+2022-02-02 02:03:54.609 plugin-container[28219:11392041] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:03:54.610 plugin-container[28219:11392041] nil host used in call to allowsAnyHTTPSCertificateForHost:
+console.error: BackgroundUpdate: 
+  _reasonsToNotScheduleUpdates: Failed to check for Maintenance Service Registry Key: [Exception... "Component returned failure code: 0x80004001 (NS_ERROR_NOT_IMPLEMENTED) [nsIUpdateProcessor.getServiceRegKeyExists]"  nsresult: "0x80004001 (NS_ERROR_NOT_IMPLEMENTED)"  location: "JS frame :: resource://gre/modules/BackgroundUpdate.jsm :: _reasonsToNotScheduleUpdates :: line 243"  data: no]
+2022-02-02 02:03:54.613 plugin-container[28219:11392041] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:03:54.613 plugin-container[28219:11392041] nil host used in call to allowsAnyHTTPSCertificateForHost:
+2022-02-02 02:03:54.613 plugin-container[28219:11392040] nil host used in call to allowsSpecificHTTPSCertificateForHost
+2022-02-02 02:03:54.613 plugin-container[28219:11392040] nil host used in call to allowsAnyHTTPSCertificateForHost:
+1643767434615	Marionette	INFO	Listening on port 61644
+1643767434644	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.amazon.co.uk/ line 2131 > injectedScript, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1643767445672	Marionette	INFO	Stopped listening on port 61644
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

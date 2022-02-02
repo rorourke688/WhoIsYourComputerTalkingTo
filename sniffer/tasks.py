@@ -11,17 +11,16 @@ from home.models import Server, NetworkTraffic, ServersEncounteredInSession, Dom
 import requests
 import time
 
-@shared_task
-def add(x, y):
- return x + y
+from selenium import webdriver
+from selenium.webdriver import ChromeOptions
+import os
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
 
 packet_counts = Counter()
 
 # 6 means tcp proto and 17 means udp,
 # need to build an enum list https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml
-
-# NetworkTraffic.objects.create(source_address_fk=sourceServer, destination_Address_fk=destinationServer, protocol=protocolState, length_Bytes=length, schedule_number=schedualNumber)
-
 # get the hostname of the server
 def getHostname(severIp):
     hostname = 'not found'
@@ -31,6 +30,20 @@ def getHostname(severIp):
         hostname = 'not found'
 
     return hostname  
+
+def getDomainNamesForServers(serverIP, serverID):
+    dnsLink1 = 'https://dns-history.whoisxmlapi.com/api/v1?apiKey=at_31sSHsR0AaUcNc1oZFnH9xZ57l8Z0&ip='
+    dnsLink = 'https://dns-history.whoisxmlapi.com/api/v1?apiKey=at_WYnnHJDmCHkCHYQSOyuocEKOiBEya&ip='
+
+    url = dnsLink + str(serverIP)
+    response = requests.get(url).json()
+    numberToIterate = response['size']
+    resultList = response['result']
+
+    for x in range(numberToIterate):
+        row = resultList[x]
+        domainName = row['name']
+        DomainNames.objects.create(ip_address_fk_id=serverID, domain_name=domainName)  
 
 def addServerToDb(severIp):
 
@@ -56,6 +69,7 @@ def addServerToDb(severIp):
 
         # if error is in json the correct one hasnt been returned
         if errorName not in source_geodata:
+            
             country = source_geodata[countryName]
             city = source_geodata[cityName]
             
@@ -70,6 +84,9 @@ def addServerToDb(severIp):
                     Server.objects.create(ip_address=str(severIp), country=country, city=city, latitude=lat, longitude=long, hostname=hostname)    
             else:
                 Server.objects.create(ip_address=str(severIp), country=country, city=city, hostname=hostname)
+
+            serverID = Server.objects.get(ip_address=str(severIp)).id
+            getDomainNamesForServers(severIp, serverID)
         else:
              Server.objects.create(ip_address=str(severIp), hostname=hostname, publicServer=False)
     else:
@@ -85,7 +102,6 @@ def getProtol(number):
     return str(number)   
 
 def protocolId(protocolType, obtainedProtocol):
-
     if obtainedProtocol == protocolType:
         return 1
     else:
@@ -108,6 +124,53 @@ def IPOccurrenceUpdate(sourceServer, tcp, udp, l):
             defaults={'tcp_count': tcp_count, 'udp_count': udp_count, 'occurrences':occurrences, 'total_bytes_sent': length})
 
 
+def readFile(row, name):
+    return "https://stackoverflow.com/questions/13218213/django-tutorial-setting-the-correct-path-variable"
+
+
+@shared_task
+def selenium_chrome():
+    option = ChromeOptions()
+    option.add_argument("--disable-dev-shm-usage")
+    option.add_argument("--disable-blink-features")
+    option.add_argument("--disable-blink-features=AutomationControlled")
+    option.add_argument("--disable-infobars")
+    option.add_argument("user-data-dri=/Users/ryanorourke/Library/Application\ Support/Google/Chrome")
+    websitesFile = open('websites.txt', 'r')
+    websites = websitesFile.readlines()
+
+    timeToWaitBetweenURls = 10
+    amountOfTimeToqueryWebsites = 1
+    for x in range(amountOfTimeToqueryWebsites):
+        for web in websites:
+            driver = webdriver.Chrome(chrome_options=option)
+            driver.get(str(web.strip()))
+            driver.implicitly_wait(timeToWaitBetweenURls)
+            time.sleep(timeToWaitBetweenURls) 
+
+# fire fox is good as it rememebers logins, chrome seems to not as it knows a bot is accessing the browser
+@shared_task
+def selenium_firefox():
+    profile = webdriver.FirefoxProfile('/Users/ryanorourke/Library/Application Support/Firefox/Profiles/1z91fxqr.default-release')
+    profile.set_preference("dom.webdriver.enabled", False)
+    profile.set_preference('useAutomationExtension', False)
+    profile.update_preferences()
+    desired = DesiredCapabilities.FIREFOX
+
+    driver = webdriver.Firefox(firefox_profile=profile,
+                           desired_capabilities=desired)
+
+    websitesFile = open('websites.txt', 'r')
+    websites = websitesFile.readlines()
+
+    timeToWaitBetweenURls = 2
+    amountOfTimeToqueryWebsites = 1
+    for web in websites:
+        driver.get(str(web.strip()))
+        driver.implicitly_wait(timeToWaitBetweenURls)
+        time.sleep(timeToWaitBetweenURls)
+
+    driver.quit()
 
 @shared_task
 def statement():
@@ -140,43 +203,18 @@ def statement():
             udp_count = protocolId(protocolState, NetworkTraffic.PROTOCOL_UDP)
 
             IPOccurrenceUpdate(sourceServer, tcp_count, udp_count, length)
-            IPOccurrenceUpdate(destinationServer, tcp_count, udp_count, length)
+            IPOccurrenceUpdate(destinationServer, tcp_count, udp_count, length)      
 
-
-# probably execute this method every 30 secs of 1 mins
+#check the database for any public servers that has no domain names associated with it
 @shared_task
 def getDomainNamesForServers():
-    dnsLink1 = 'https://dns-history.whoisxmlapi.com/api/v1?apiKey=at_31sSHsR0AaUcNc1oZFnH9xZ57l8Z0&ip='
-    dnsLink = 'https://dns-history.whoisxmlapi.com/api/v1?apiKey=at_WYnnHJDmCHkCHYQSOyuocEKOiBEya&ip='
-    
     # get the servers that are public and do not occur in the domain name table
     serversInDomainName = DomainNames.objects.values_list('ip_address_fk_id', flat=True).distinct()
     servers = Server.objects.exclude(id__in=serversInDomainName).filter(publicServer=True)
 
-    # do the domain name rest call to get the json
-    # we now have a list of domain names, iterate over these names create methods for check black list and white list table
-    # these methods will be created later
-    # create in row in the databases
-
-    for server in servers:        
-        url = dnsLink + str(server.ip_address)
-        response = requests.get(url).json()
-        numberToIterate = response['size']
-        resultList = response['result']
-        print(numberToIterate)
-
-        for x in range(numberToIterate):
-            row = resultList[x]
-            domainName = row['name']
-            DomainNames.objects.create(ip_address_fk_id=server.id, domain_name=domainName)
-
-        print("sleeping")
+    for server in servers: 
+        getDomainNamesForServers(server.ip_address, server.id)
         time.sleep(1)          
-
-
-
-
-
 
 @shared_task
 def updateObtainedServerInformation():
