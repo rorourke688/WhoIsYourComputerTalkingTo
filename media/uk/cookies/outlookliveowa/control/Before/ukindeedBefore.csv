@@ -1,0 +1,7 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+5.5,7.78,932,1318.05,1,1.41,1.4142,1.4142,1.4142,GOOGLE,5.5
+3.5,4.95,459,649.12,0.5,0.71,1.4142,1.4142,1.4142,Jisc Services Limited,7.0
+1,1.41,100,141.42,0.5,0.71,1.4142,1.4142,1.4142,FASTLY,2.0
+303.5,307.59,293037,362308.79,4.5,0.71,1.2364,1.0135,0.1571,AMAZON-02,67.4444
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0
+10,14.14,3939.5,5571.29,1,1.41,1.4142,1.4142,1.4142,SOFTLAYER,10.0

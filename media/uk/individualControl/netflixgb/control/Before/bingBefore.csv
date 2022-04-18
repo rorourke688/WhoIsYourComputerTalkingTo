@@ -1,0 +1,8 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+2,0.0,151.5,6.36,1,0.0,0.042,0.0,0.0,GOOGLE,2.0
+234,330.93,240555.5,340196.85,2.5,3.54,1.4142,1.4142,1.4142,MICROSOFT-CORP-MSN-AS-BLOCK,93.6
+3,4.24,417,589.73,0.5,0.71,1.4142,1.4142,1.4142,Jisc Services Limited,6.0
+162.5,229.81,158649,224363.57,1,1.41,1.4142,1.4142,1.4142,AMAZON-02,162.5
+357.5,505.58,412001.5,582658.11,1,1.41,1.4142,1.4142,1.4142,Akamai International B.V.,357.5
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0
+20.5,28.99,22519.5,31847.38,0.5,0.71,1.4142,1.4142,1.4142,AKAMAI-AS,41.0

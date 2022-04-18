@@ -1,0 +1,5 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+7,9.9,3059.5,4326.79,1,1.41,1.4142,1.4142,1.4142,MICROSOFT-CORP-MSN-AS-BLOCK,7.0
+1,1.41,71,100.41,0.5,0.71,1.4142,1.4142,1.4142,FACEBOOK,2.0
+352,493.56,377529,530864.66,4,4.24,1.4062,1.4022,1.0607,GOOGLE,88.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0

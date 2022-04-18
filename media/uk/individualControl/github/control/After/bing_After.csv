@@ -1,0 +1,5 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+119,159.81,126744.5,178805.38,3.5,0.71,1.4108,1.3429,0.202,MICROSOFT-CORP-MSN-AS-BLOCK,34.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0
+17,24.04,19452,27509.28,0.5,0.71,1.4142,1.4142,1.4142,AKAMAI-AS,34.0
+2.5,3.54,2619.5,3704.53,0.5,0.71,1.4142,1.4142,1.4142,Akamai International B.V.,5.0

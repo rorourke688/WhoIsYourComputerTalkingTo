@@ -1,0 +1,8 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+9.5,6.36,1131,1064.9,2.5,0.71,0.9416,0.6699,0.2828,GOOGLE,3.8
+0.5,0.71,104.5,147.79,0.5,0.71,1.4142,1.4142,1.4142,Jisc Services Limited,1.0
+8,11.31,4282.5,6056.37,1,1.41,1.4142,1.4142,1.4142,APPLE-ENGINEERING,8.0
+2,2.83,104,147.08,0.5,0.71,1.4142,1.4142,1.4142,EDGECAST,4.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0
+1,1.41,52,73.54,0.5,0.71,1.4142,1.4142,1.4142,AKAMAI-AS,2.0
+1,1.41,52,73.54,0.5,0.71,1.4142,1.4142,1.4142,AMAZON-02,2.0

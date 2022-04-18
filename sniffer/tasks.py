@@ -10,7 +10,7 @@ from django.db.models import Max, Q
 from home.models import Server, NetworkTraffic, ServersEncounteredInSession, DomainNames
 import requests
 import time
-
+import json
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 import os
@@ -29,24 +29,22 @@ def getHostname(severIp):
     except socket.herror:
         hostname = 'not found'
 
-    return hostname  
+    return hostname
 
-def getDomainNamesForServers(serverIP, serverID):
-    dnsLink1 = 'https://dns-history.whoisxmlapi.com/api/v1?apiKey=at_31sSHsR0AaUcNc1oZFnH9xZ57l8Z0&ip='
-    dnsLink = 'https://dns-history.whoisxmlapi.com/api/v1?apiKey=at_WYnnHJDmCHkCHYQSOyuocEKOiBEya&ip='
 
-    url = dnsLink + str(serverIP)
-    response = requests.get(url).json()
-    numberToIterate = response['size']
-    resultList = response['result']
+def updateMalicousServerInformation(serverIP):
+    endpoint = 'https://endpoint.apivoid.com/iprep/v1/pay-as-you-go/?key=8e51d878f06a09dc24643c0b3a385eb486b96738&ip='
+    response = requests.get(endpoint + str(serverIP)).json()
 
-    for x in range(numberToIterate):
-        row = resultList[x]
-        domainName = row['name']
-        DomainNames.objects.create(ip_address_fk_id=serverID, domain_name=domainName)  
-
+    if 'error' not in response:
+        numberMalicous = response['data']['report']['blacklists']['detections']
+        detectionMalicous = response['data']['report']['blacklists']['detection_rate']
+        return numberMalicous, detectionMalicous
+    else:
+        return 0, '0%'      
+      
+# we cant come up with domain names on the fly as we need to wait 25 seconds for domain names
 def addServerToDb(severIp):
-
     endpointURL = 'https://ipapi.co/'
     apiKey = '/json'
     append = ''
@@ -69,9 +67,12 @@ def addServerToDb(severIp):
 
         # if error is in json the correct one hasnt been returned
         if errorName not in source_geodata:
-            
+            result = updateMalicousServerInformation(severIp)
+            malicousCount = result[0]
+            malicousDetectionRate = result[1]
             country = source_geodata[countryName]
             city = source_geodata[cityName]
+            print('new server ip:' + str(severIp) + ' mal: ' + str(malicousCount))
             
             # design consideration, if lat and long dont exis we still add to the serer table, 457
             if source_geodata[latitideName] is not None and source_geodata[longitudeName] is not None:
@@ -79,18 +80,14 @@ def addServerToDb(severIp):
                 long = float(source_geodata[longitudeName])
 
                 if source_geodata[orgName] is not None and source_geodata[asnName] is not None:
-                    Server.objects.create(ip_address=str(severIp), country=country, city=city, latitude=lat, longitude=long, hostname=hostname, asn=source_geodata[asnName], org=source_geodata[orgName], region=source_geodata[regionName])
+                    Server.objects.create(ip_address=str(severIp), country=country, city=city, latitude=lat, longitude=long, hostname=hostname, asn=source_geodata[asnName], org=source_geodata[orgName], region=source_geodata[regionName], malicousCount=malicousCount, detectionRate=malicousDetectionRate)
                 else:
-                    Server.objects.create(ip_address=str(severIp), country=country, city=city, latitude=lat, longitude=long, hostname=hostname)    
+                    Server.objects.create(ip_address=str(severIp), country=country, city=city, latitude=lat, longitude=long, hostname=hostname, malicousCount=malicousCount, detectionRate=malicousDetectionRate)    
             else:
-                Server.objects.create(ip_address=str(severIp), country=country, city=city, hostname=hostname)
-
-            serverID = Server.objects.get(ip_address=str(severIp)).id
-            getDomainNamesForServers(severIp, serverID)
+                Server.objects.create(ip_address=str(severIp), country=country, city=city, hostname=hostname, malicousCount=malicousCount, detectionRate=malicousDetectionRate)
         else:
              Server.objects.create(ip_address=str(severIp), hostname=hostname, publicServer=False)
-    else:
-        print('ip address is already in the table: ' + str(severIp))
+    
 
 def getProtol(number):
     if number == 6:
@@ -107,26 +104,43 @@ def protocolId(protocolType, obtainedProtocol):
     else:
         return 0  
 
-def IPOccurrenceUpdate(sourceServer, tcp, udp, l):
+def IPOccurrenceUpdate(sourceServer, destinationServer, tcp, udp, l):
     sourceOccurr = ServersEncounteredInSession.objects.filter(ip_address_fk_id=sourceServer.__getattribute__('id')).first()
+    desOccurr = ServersEncounteredInSession.objects.filter(ip_address_fk_id=destinationServer.__getattribute__('id')).first()
+    
     tcp_count = tcp
     udp_count = udp
-    length = l
-    occurrences = 1
+
+    tcp_src = tcp_count
+    tcp_des = tcp_count
+
+    udp_src = udp_count
+    udp_des = udp_count
+
+    occ_src = 1
+    occ_des = 1
+
+    length_src = l
+    length_des = l
 
     if sourceOccurr is not None:
-        tcp_count = tcp_count +  sourceOccurr.__getattribute__('tcp_count')
-        udp_count = udp_count +  sourceOccurr.__getattribute__('udp_count')
-        occurrences = occurrences + sourceOccurr.__getattribute__('occurrences')
-        length = length + sourceOccurr.__getattribute__('total_bytes_sent')
+        tcp_src = tcp_src +  sourceOccurr.__getattribute__('tcp_count')
+        udp_src = udp_src +  sourceOccurr.__getattribute__('udp_count')
+        occ_src = occ_src + sourceOccurr.__getattribute__('occurrences')
+        length_src = length_src + sourceOccurr.__getattribute__('total_bytes_sent')
+
+    if desOccurr is not None:
+        tcp_des = tcp_des +  desOccurr.__getattribute__('tcp_count')
+        udp_des = udp_des +  desOccurr.__getattribute__('udp_count')
+        occ_des = occ_des + desOccurr.__getattribute__('occurrences')
+        length_des = length_des + desOccurr.__getattribute__('total_bytes_sent')    
 
     ServersEncounteredInSession.objects.update_or_create(ip_address_fk_id=sourceServer.__getattribute__('id'),
-            defaults={'tcp_count': tcp_count, 'udp_count': udp_count, 'occurrences':occurrences, 'total_bytes_sent': length})
+            defaults={'tcp_count': tcp_src, 'udp_count': udp_src, 'occurrences':occ_src, 'total_bytes_sent': length_src})
 
-
-def readFile(row, name):
-    return "https://stackoverflow.com/questions/13218213/django-tutorial-setting-the-correct-path-variable"
-
+    # should i only display packets that are being retrieved
+    #ServersEncounteredInSession.objects.update_or_create(ip_address_fk_id=destinationServer.__getattribute__('id'),
+           # defaults={'tcp_count': tcp_des, 'udp_count': udp_des, 'occurrences':occ_des, 'total_bytes_sent': length_des})        
 
 @shared_task
 def selenium_chrome():
@@ -163,37 +177,27 @@ def selenium_firefox():
     websitesFile = open('websites.txt', 'r')
     websites = websitesFile.readlines()
 
-    timeToWaitBetweenURls = 2
-    amountOfTimeToqueryWebsites = 1
+    timeToWaitBetweenURls = 10
     for web in websites:
         driver.get(str(web.strip()))
-        driver.implicitly_wait(timeToWaitBetweenURls)
+        #driver.implicitly_wait(timeToWaitBetweenURls)
+        capturePackets = sniff(timeout=timeToWaitBetweenURls)
         time.sleep(timeToWaitBetweenURls)
 
     driver.quit()
 
-@shared_task
-def statement():
- schedualNumber = NetworkTraffic.objects.aggregate(Max('schedule_number'))['schedule_number__max']
-
- if schedualNumber is None:
-     schedualNumber = 1
- else:
-     schedualNumber = schedualNumber + 1   
-
- print('The number is ' + str(schedualNumber))      
- capture = sniff(timeout=5)
- for packet in capture:
+def statement(capturedPackets):   
+ for packet in capturedPackets:
     if hasattr(packet.payload, "src") and hasattr(packet.payload, "dst") and hasattr(packet.payload, "proto") and hasattr(packet.payload, "len"): 
         sourceIP = packet[0][1].src
         destinationIP = packet[0][1].dst
         length = packet[0][1].len
         protocol = packet[0][1].proto
 
-        # need a new endpoint
         addServerToDb(sourceIP)
         addServerToDb(destinationIP)
         
+        # get the servers from the database as they were just saved
         sourceServer = Server.objects.filter(ip_address=str(sourceIP)).first()
         destinationServer = Server.objects.filter(ip_address=str(destinationIP)).first()
 
@@ -202,80 +206,5 @@ def statement():
             tcp_count = protocolId(protocolState, NetworkTraffic.PROTOCOL_TCP)
             udp_count = protocolId(protocolState, NetworkTraffic.PROTOCOL_UDP)
 
-            IPOccurrenceUpdate(sourceServer, tcp_count, udp_count, length)
-            IPOccurrenceUpdate(destinationServer, tcp_count, udp_count, length)      
-
-#check the database for any public servers that has no domain names associated with it
-@shared_task
-def getDomainNamesForServers():
-    # get the servers that are public and do not occur in the domain name table
-    serversInDomainName = DomainNames.objects.values_list('ip_address_fk_id', flat=True).distinct()
-    servers = Server.objects.exclude(id__in=serversInDomainName).filter(publicServer=True)
-
-    for server in servers: 
-        getDomainNamesForServers(server.ip_address, server.id)
-        time.sleep(1)          
-
-@shared_task
-def updateObtainedServerInformation():
-    endpointURL = 'https://ipapi.co/'
-    apiKey = '/json'
-
-    # any server with null information that if filled could be useful
-    servers = Server.objects.all()
-
-    for s in servers:
-        severIp = s.ip_address
-        source_response = requests.get(endpointURL + str(severIp) + apiKey)
-        source_geodata = source_response.json()
-        print(source_geodata)
-
-        endpointURL = 'https://ipapi.co/'
-        apiKey = '/json'
-        append = ''
-        latitideName = append + 'latitude'
-        longitudeName = append + 'longitude'
-        cityName = append + 'city'
-        countryName = append + 'country_name'
-        regionName = append + 'region'
-        asnName = append + 'asn'
-        orgName = append + 'org'
-        errorName = append + 'error'
-
-        serverIDValue = s.id
-        
-        # if no error occured
-        if errorName not in source_geodata:
-
-            if source_geodata[latitideName] is not None and source_geodata[longitudeName] is not None:
-                Server.objects.filter(id=serverIDValue).update(latitude=source_geodata[latitideName], longitude=source_geodata[longitudeName])
-
-            if source_geodata[countryName] is not None:
-                Server.objects.filter(id=serverIDValue).update(country=source_geodata[countryName])   
-
-            if source_geodata[cityName] is not None:
-                Server.objects.filter(id=serverIDValue).update(city=source_geodata[cityName])
-
-            if source_geodata[regionName] is not None:
-                Server.objects.filter(id=serverIDValue).update(region=source_geodata[regionName])
-
-            if source_geodata[asnName] is not None:
-                Server.objects.filter(id=serverIDValue).update(asn=source_geodata[asnName])
-                            
-            if source_geodata[orgName] is not None:
-                Server.objects.filter(id=serverIDValue).update(org=source_geodata[orgName])
-        else:
-            Server.objects.filter(id=serverIDValue).update(publicServer=False)
-
-        print('about to sleep')
-        time.sleep(2)                                    
-
-            
-          
-
- 
-
-
-
-
-  
+            IPOccurrenceUpdate(sourceServer, destinationServer, tcp_count, udp_count, length)
+               

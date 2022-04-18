@@ -1,0 +1,7 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+264.5,374.06,236623.5,334636.16,4,5.66,1.4142,1.4142,1.4142,GOOGLE,66.125
+6.5,3.54,3016,2279.71,1,0.0,0.7559,0.5439,0.0,MICROSOFT-CORP-MSN-AS-BLOCK,6.5
+4,5.66,392,554.37,0.5,0.71,1.4142,1.4142,1.4142,Jisc Services Limited,8.0
+0.5,0.71,41.5,58.69,0.5,0.71,1.4142,1.4142,1.4142,FACEBOOK,1.0
+1.5,2.12,211,298.4,0.5,0.71,1.4142,1.4142,1.4142,AMAZON-02,3.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0

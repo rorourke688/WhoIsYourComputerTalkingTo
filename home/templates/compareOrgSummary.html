@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Our Map</title>
+   
+
+   <!-- leaflet css-->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+   <style>
+     #table1 {
+        table-layout: auto;
+        width: 70%;
+        border-collapse: collapse;
+        border: 3px solid purple;
+      }
+
+      #table2 {
+        table-layout: auto;
+        width: 70%;
+        border-collapse: collapse;
+        border: 3px solid green;
+      }
+
+      #table3 {
+        table-layout: auto;
+        width: 70%;
+        border-collapse: collapse;
+        border: 3px solid blue;
+      }
+
+      #table_heading{
+        text-align: left;
+      }
+   </style>
+
+   <script>
+
+     $(document).ready(function(){
+
+         $("#jquery-upload-button").click(function(){
+            let formData = new FormData();
+            let file1 = $('#file1')[0].files[0];
+            let file2 = $('#file2')[0].files[0];
+            formData.append('file1', file1);
+            formData.append('file2', file2);
+
+            let str1 = $("#outputName").val();
+
+              $.ajax({
+                type:'POST',
+                url: "{% url 'uploadSummary'%}",
+                responseType: 'json',
+                processData: false,
+                contentType: false,
+                headers: {
+                 "document": formData,
+                 "fileName": str1               
+                },
+                data: formData,
+                success: function(response){
+                  alert('subtmit complete')
+                },
+                error: function(response){
+                  alert('Cannot scan' + response.error);
+                }
+            })
+        })
+     })
+
+   </script>
+
+</head>
+<body>   
+
+  <a href="http://127.0.0.1:8000" class="button">Home</a>
+  <a href="http://127.0.0.1:8000/org" class="button">Organisation Break Down</a>
+  <form id="jquery-upload-from" enctype="multipart/form-data">
+   {% csrf_token %}
+   <label for="file1">Csv File 1</label>
+   <input type="file" id="file1" name="file1"/>
+
+   <label for="file2">CSV File 2</label>
+   <input type="file" id="file2" name="file2"/>
+   <input type="button" id="jquery-upload-button" value="Upload"/>
+
+  <label for="outputName">Name Of Output CSV File</label>
+  <input type="text" id="outputName" name="outputName">
+  </form>
+
+  <div style="margin-bottom: 60px;">
+   <h2>Organisations That Cross over In File 1 and 2</h2>
+   <table id="table1" class="table">
+      <thead>
+        <tr>
+          <th id="table_heading">Organisation</th>
+          <th id="table_heading">File 1 Occurence Mean</th>
+          <th id="table_heading">File 2 Occurence Mean</th>
+          <th id="table_heading">Difference In Occurence Per Server</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  
+  <div style="margin-bottom: 60px;">
+   <h2>Organisations Unique To File 1</h2>
+   <table id="table2" class="table">
+      <thead>
+        <tr>
+          <th id="table_heading">Organisation</th>
+          <th id="table_heading">File 1 Occurence Mean</th>
+        </tr>
+      </thead>
+    </table>
+  </div> 
+
+  <div style="margin-bottom: 60px;">
+   <h2>Organisations Unique To File 2</h2>
+   <table id="table3" class="table">
+      <thead>
+        <tr>
+          <th id="table_heading">Organisation</th>
+          <th id="table_heading">File 2 Occurence Mean</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+</body>
+</html>
+
+
+ <!-- leaflet js-->
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+ <script>
+ 
+  var h = function(){
+    setInterval(function(){
+      $.ajax({
+        type:'GET',
+        url: "{% url 'getSummaryInBoth'%}",
+        responseType: 'json',
+        success: function(response){
+          
+          console.log(response)
+          // celaring the table and the map
+          var table = document.getElementById("table1")
+
+          while(table.rows.length > 1){
+            table.deleteRow(1)
+          }
+          
+          for(var key in response.servers){
+            var row = table.insertRow(1);
+
+            var org = response.servers[key].org
+            var cell_org = row.insertCell(0);
+            cell_org.innerHTML = org;
+
+            var fileOneOccurPerServer = response.servers[key].fileOneOccurrences_mean
+            var cell_fileOneOccurPerServer = row.insertCell(1);
+            cell_fileOneOccurPerServer.innerHTML = fileOneOccurPerServer;
+
+            var fileTwoOccurPerServer = response.servers[key].fileTwoOccurrences_mean
+            var cell_fileTwoOccurPerServer = row.insertCell(2);
+            cell_fileTwoOccurPerServer.innerHTML = fileTwoOccurPerServer;
+
+            var differenceInOccurPerServer = response.servers[key].differenceInOccurenceMean
+            var cell_differenceInOccurPerServer = row.insertCell(3);
+            cell_differenceInOccurPerServer.innerHTML = differenceInOccurPerServer;
+        }
+          },
+        error: function(response){
+        alert('error getting all the servers');
+        }
+      })
+    }, 5000);
+    }
+    
+    var f1 = function(){
+    setInterval(function(){
+      $.ajax({
+        type:'GET',
+        url: "{% url 'getSummaryInFileOne'%}",
+        responseType: 'json',
+        success: function(response){
+          
+          console.log(response)
+          // celaring the table and the map
+          var table = document.getElementById("table2")
+
+          while(table.rows.length > 1){
+            table.deleteRow(1)
+          }
+          
+          for(var key in response.servers){
+            var row = table.insertRow(1);
+
+            var org = response.servers[key].org
+            var cell_org = row.insertCell(0);
+            cell_org.innerHTML = org;
+
+            var occurrencePerServer = response.servers[key].occurrences_mean
+            var cell_occurrencePerServer = row.insertCell(1);
+            cell_occurrencePerServer.innerHTML = occurrencePerServer;
+        }
+          },
+        error: function(response){
+        alert('error getting all the servers');
+        }
+      })
+    }, 5000);
+    } 
+
+        var f2 = function(){
+    setInterval(function(){
+      $.ajax({
+        type:'GET',
+        url: "{% url 'getSummaryInFileTwo'%}",
+        responseType: 'json',
+        success: function(response){
+          
+          console.log(response)
+          // celaring the table and the map
+          var table = document.getElementById("table3")
+
+          while(table.rows.length > 1){
+            table.deleteRow(1)
+          }
+          
+          for(var key in response.servers){
+            var row = table.insertRow(1);
+
+            var org = response.servers[key].org
+            var cell_org = row.insertCell(0);
+            cell_org.innerHTML = org;
+
+            var occurrencePerServer = response.servers[key].occurrences_mean
+            var cell_occurrencePerServer = row.insertCell(1);
+            cell_occurrencePerServer.innerHTML = occurrencePerServer;
+        }
+          },
+        error: function(response){
+        alert('error getting all the servers');
+        }
+      })
+    }, 5000);
+    } 
+
+  $(document).ready(h());
+  $(document).ready(f1());
+  $(document).ready(f2());
+
+ </script>

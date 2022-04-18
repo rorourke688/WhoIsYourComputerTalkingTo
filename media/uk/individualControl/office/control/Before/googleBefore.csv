@@ -1,0 +1,7 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+7,9.9,1058,1496.24,0.5,0.71,1.4142,1.4142,1.4142,Jisc Services Limited,14.0
+21,29.7,10662.5,15079.05,0.5,0.71,1.4142,1.4142,1.4142,APPLE-AUSTIN,42.0
+28,39.6,9670.5,13676.15,1,1.41,1.4142,1.4142,1.4142,AMAZON-02,28.0
+25.5,36.06,8718,12329.11,1.5,2.12,1.4142,1.4142,1.4142,APPLE-ENGINEERING,17.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0
+23,32.53,10540.5,14906.52,0.5,0.71,1.4142,1.4142,1.4142,AKAMAI-AS,46.0

@@ -1,0 +1,7 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+71,100.41,40278.5,56962.4,3,4.24,1.4142,1.4142,1.4142,GOOGLE,23.6667
+3,4.24,418.5,591.85,0.5,0.71,1.4142,1.4142,1.4142,Jisc Services Limited,6.0
+28.5,7.78,9876.5,1192.89,3,0.0,0.1208,0.2729,0.0,AMAZON-02,9.5
+0.5,0.71,26,36.77,0.5,0.71,1.4142,1.4142,1.4142,EDGECAST,1.0
+16.5,23.33,4721,6676.5,0.5,0.71,1.4142,1.4142,1.4142,CLOUDFLARENET,33.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'djgeojson',
     'home',
-    'sniffer'
+    'sniffer',
+    'updateDB'
 ]
 
 MIDDLEWARE = [

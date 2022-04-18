@@ -7,13 +7,23 @@ from . models import Server
 from djgeojson.views import GeoJSONLayerView
 
 from . import views
+from sniffer import tasks
 
 # url configuration
 urlpatterns = [
- # path('upload/', views.upload, name='upload')
- path('geo', TemplateView.as_view(template_name='index.html')),
- path('getAllservers/', views.getAllServers, name='getAllservers'),
+ path('', TemplateView.as_view(template_name='index.html')),
+ path('uploadSummary/', views.uploadSummary, name='uploadSummary'),
+ path('csvOrgSummaryDifference/', TemplateView.as_view(template_name='compareOrgSummary.html')),
+ path('getSummaryInFileTwo/', views.getSummaryInFileTwo, name='getSummaryInFileTwo'),
  path('getNewServerTraffic/', views.getNewServerTraffic, name='getNewServerTraffic'),
- path('deleteAllRowsInNetworkTraffic/', views.deleteAllRowsInNetworkTraffic, name='deleteAllRowsInNetworkTraffic')
- #path('map', GeoJSONLayerView.as_view(model=Server))
+ path('csvSummary/', TemplateView.as_view(template_name='csvSummary.html')),
+ path('deleteAllRowsInNetworkTraffic/', views.deleteAllRowsInNetworkTraffic, name='deleteAllRowsInNetworkTraffic'),
+ path('scanControlWebsites/', views.scanWebsitesControl, name='scanControlWebsites'),
+ path('scanWebsites/', views.scanWebsitesInSingleFile, name='scanWebsites'),
+ path('getServerDifferences/', views.getServerDifferences, name='getServerDifferences'),
+ path('getServerDifferencesSummary/', views.getServerDifferencesSummary, name='getServerDifferencesSummary'),
+ path('upload/', views.upload, name='upload'),
+ path('getSummaryInBoth/', views.getSummaryInBoth, name='getSummaryInBoth'),
+ path('getSummaryInFileOne/', views.getSummaryInFileOne, name='getSummaryInFileOne'),
+ path('outputAllSummaryFiles/', views.outputAllSummaryFiles, name='outputAllSummaryFiles')
 ]

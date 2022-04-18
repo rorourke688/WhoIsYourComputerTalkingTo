@@ -1,0 +1,7 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+3,0.0,174.5,26.16,1.5,0.71,0.1499,0.0,0.4714,GOOGLE,2.0
+2,2.83,210.5,297.69,0.5,0.71,1.4142,1.4142,1.4142,FASTLY,4.0
+3,4.24,156,220.62,0.5,0.71,1.4142,1.4142,1.4142,EDGECAST,6.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0
+30.5,43.13,12687.5,17942.83,2.5,3.54,1.4142,1.4142,1.4142,AMAZON-02,12.2
+1,1.41,425,601.04,0.5,0.71,1.4142,1.4142,1.4142,SOFTLAYER,2.0

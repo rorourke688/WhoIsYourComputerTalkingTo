@@ -1,0 +1,4 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+5,2.83,785.5,816.71,1,0.0,1.0397,0.5657,0.0,GOOGLE,5.0
+0.5,0.71,41.5,58.69,0.5,0.71,1.4142,1.4142,1.4142,FACEBOOK,1.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0

@@ -28,8 +28,9 @@
    </style>
 
    <script>
+
      $(document).ready(function(){
-       $("button").click(function(){
+       $("#delete").click(function(){
               $.ajax({
                 type:'GET',
                 url: "{% url 'deleteAllRowsInNetworkTraffic'%}",
@@ -42,39 +43,116 @@
                 }
             })
         })
+
+        $("#outputAllSummaryFiles").click(function(){
+          let str1 = $("#fname1").val();
+
+              $.ajax({
+                type:'POST',
+                url: "{% url 'outputAllSummaryFiles'%}",
+                responseType: 'json',
+                processData: false,
+                contentType: false,
+                headers: {
+                  "fileName": str1
+                },
+                data: str1,
+                success: function(response){
+                  alert('Output Files created for their respective text file')
+                },
+                error: function(response){
+                  alert('error getting all the servers');
+                }
+            })
+        })
+
+         $("#scanControlFiles").click(function(){
+            let str1 = $("#fname1").val();
+            let str2 = $("#fname2").val();
+
+              $.ajax({
+                type:'GET',
+                url: "{% url 'scanControlWebsites'%}",
+                responseType: 'json',
+                headers: {
+                  "fileName": str1,
+                  "csvName": str2
+                },
+                success: function(response){
+                  alert('Scanning')
+                },
+                error: function(response){
+                  alert('Cannot scan' + response.error);
+                }
+            })
+        })
+
+        $("#scan").click(function(){
+            let str1 = $("#fname1").val();
+            let str2 = $("#fname2").val();
+
+              $.ajax({
+                type:'GET',
+                url: "{% url 'scanWebsites'%}",
+                responseType: 'json',
+                headers: {
+                  "fileName": str1,
+                  "csvName": str2
+                },
+                success: function(response){
+                  alert('Scanning')
+                },
+                error: function(response){
+                  alert('Cannot scan' + response.error);
+                }
+            })
+        })
      })
 
    </script>
 
 </head>
-<body>   
+<body>
 
-  <h2>This page shows the locations of servers responsible for network traffic</h2>
-  <button>Delete All Network Data captured</button>
+  <button id="scan">Start Text file</button>
+  <button id="scanControlFiles">Start Scaning W/ Control Files</button>
+  <button id="delete">Delete All Network Data captured</button>
+  <button id="outputAllSummaryFiles">Output all Summary Related Files (Only when scanning completed)</button>
+  
+  <label for="fname1">Scanning File Name</label>
+  <input type="text" id="fname1" name="fname1">
+
+  <label for="fname2">CSV Export Name</label>
+  <input type="text" id="fname2" name="fname2">
+
+  <a href="http://127.0.0.1:8000/csvSummary" class="button">csv analysis</a>
+  <a href="http://127.0.0.1:8000/csvOrgSummaryDifference" class="button">Organisation comparison</a>
+  
   <div id="map"></div>
 
         <table id="table" class="table">
           <thead>
             <tr>
-              <th id="table_heading">HostName</th>
+              <th id="table_heading">Org</th>
+              <th id="table_heading">IP</th>
               <th id="table_heading">Country</th>
               <th id="table_heading">City</th>
               <th id="table_heading">Occurences</th>
               <th id="table_heading">TCP</th>
               <th id="table_heading">UDP</th>
-              <th id="table_heading">Total Bytes Sent</th>
+              <th id="table_heading">Malicous count</th>
             </tr>
           </thead>
             <tbody>
               {% for s in servers %}
               <tr>
-                <td>{{s.hostname}}</td>
+                <td>{{s.org}}</td>
                 <td>{{s.country}}</td>
                 <td>{{s.city}}</td>
                 <td>{{s.occurrences}}</td>
                 <td>{{s.tcp_count}}</td>
                 <td>{{s.udp_count}}</td>
-                <td>{{s.total_bytes_sent}}</td>
+                <td>{{s.malicousCount}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -100,69 +178,71 @@
   var markersLayer = new L.LayerGroup();
   markersLayer.addTo(map)
 
-var f = function(){
+  var f = function(){
+    setInterval(function(){
+      $.ajax({
+        type:'GET',
+        url: "{% url 'getNewServerTraffic'%}",
+        responseType: 'json',
+        success: function(response){
+          
+          console.log(response)
+          // celaring the table and the map
+          markersLayer.clearLayers();
+          var table = document.getElementById("table")
 
-   setInterval(function(){
-     $.ajax({
-      type:'GET',
-      url: "{% url 'getNewServerTraffic'%}",
-      responseType: 'json',
-      success: function(response){
-        
-        console.log(response)
-        // celaring the table and the map
-        markersLayer.clearLayers();
-        var table = document.getElementById("table")
+          while(table.rows.length > 1){
+            table.deleteRow(1)
+          }
+          
+          for(var key in response.servers){
+          var org = response.servers[key].org
+          var ip = response.servers[key].ip
+          var country = response.servers[key].country
+          var city = response.servers[key].city
+          var occurrences = response.servers[key].occurrences
+          var tcp_count = response.servers[key].tcp_count
+          var udp_count = response.servers[key].udp_count
+          var malicousCount = response.servers[key].malicousCount
 
-        while(table.rows.length > 1){
-          table.deleteRow(1)
+          var row = table.insertRow(1);
+
+          var cell_org = row.insertCell(0);
+          cell_org.innerHTML = org;
+
+          var cell_ip = row.insertCell(1);
+          cell_ip.innerHTML = ip;
+
+          var cell_country = row.insertCell(2);
+          cell_country.innerHTML = country;
+
+          var cell_city = row.insertCell(3);
+          cell_city.innerHTML = city;
+
+          var cell_occurrences = row.insertCell(4);
+          cell_occurrences.innerHTML = occurrences;
+
+          var cell_tcp_count = row.insertCell(5);
+          cell_tcp_count.innerHTML = tcp_count;
+
+          var cell_udp_count = row.insertCell(6);
+          cell_udp_count.innerHTML = udp_count;
+
+          var cell_malicousCount = row.insertCell(7);
+          cell_malicousCount.innerHTML = malicousCount;
+
+          var lat = response.servers[key].latitude
+          var long = response.servers[key].longitude
+          var m = L.marker([lat, long])
+          markersLayer.addLayer(m); 
         }
-        
-        //$('#table_id tbody').remove();
-        for(var key in response.servers){
-         var hostname = response.servers[key].hostname
-         var country = response.servers[key].country
-         var city = response.servers[key].city
-         var occurrences = response.servers[key].occurrences
-         var tcp_count = response.servers[key].tcp_count
-         var udp_count = response.servers[key].udp_count
-         var total_bytes_sent = response.servers[key].total_bytes_sent
-
-         var row = table.insertRow(1);
-
-         var cell_hostname = row.insertCell(0);
-         cell_hostname.innerHTML = hostname;
-
-         var cell_country = row.insertCell(1);
-         cell_country.innerHTML = country;
-
-         var cell_city = row.insertCell(2);
-         cell_city.innerHTML = city;
-
-         var cell_occurrences = row.insertCell(3);
-         cell_occurrences.innerHTML = occurrences;
-
-         var cell_tcp_count = row.insertCell(4);
-         cell_tcp_count.innerHTML = tcp_count;
-
-         var cell_udp_count = row.insertCell(5);
-         cell_udp_count.innerHTML = udp_count;
-
-         var cell_total_bytes_sent = row.insertCell(6);
-         cell_total_bytes_sent.innerHTML = total_bytes_sent;
-
-         var lat = response.servers[key].latitude
-         var long = response.servers[key].longitude
-         var m = L.marker([lat, long])
-         markersLayer.addLayer(m); 
-       }
-      },
-      error: function(response){
-       alert('error getting all the servers');
-      }
-     })
-   }, 5000);
-  } 
+        },
+        error: function(response){
+        alert('error getting all the servers');
+        }
+      })
+    }, 4000);
+    } 
 
 
   $(document).ready(f());

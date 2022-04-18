@@ -1,0 +1,6 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+6.5,6.36,967.5,1164.6,1,0.0,1.2037,0.9791,0.0,GOOGLE,6.5
+2,2.83,104,147.08,0.5,0.71,1.4142,1.4142,1.4142,EDGECAST,4.0
+3,4.24,120,169.71,1,1.41,1.4142,1.4142,1.4142,AMAZON-02,3.0
+2,2.83,129.5,183.14,0.5,0.71,1.4142,1.4142,1.4142,Criteo SA,4.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0

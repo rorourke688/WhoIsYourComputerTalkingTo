@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Our Map</title>
+   
+
+   <!-- leaflet css-->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+   <style>
+     #table {
+        table-layout: auto;
+        width: 70%;
+        border-collapse: collapse;
+        border: 3px solid purple;
+      }
+
+      #table1 {
+        table-layout: auto;
+        width: 70%;
+        border-collapse: collapse;
+        border: 3px solid green;
+      }
+
+      #table_heading{
+        text-align: left;
+      }
+   </style>
+
+   <script>
+
+     $(document).ready(function(){
+
+         $("#jquery-upload-button").click(function(){
+            let formData = new FormData();
+            let file1 = $('#file1')[0].files[0];
+            let file2 = $('#file2')[0].files[0];
+            formData.append('file1', file1);
+            formData.append('file2', file2);
+
+              $.ajax({
+                type:'POST',
+                url: "{% url 'upload'%}",
+                responseType: 'json',
+                processData: false,
+                contentType: false,
+                headers: {
+                 "document": formData                
+                },
+                data: formData,
+                success: function(response){
+                  alert('subtmit complete')
+                },
+                error: function(response){
+                  alert('Cannot scan' + response.error);
+                }
+            })
+        })
+     })
+
+   </script>
+
+</head>
+<body>   
+
+  <a href="http://127.0.0.1:8000" class="button">Home</a>
+  <a href="http://127.0.0.1:8000/org" class="button">Organisation Break Down</a>
+  <form id="jquery-upload-from" enctype="multipart/form-data">
+   {% csrf_token %}
+   <label for="file1">Base CSV File</label>
+   <input type="file" id="file1" name="file1"/>
+
+   <label for="file2">Other CSV File</label>
+   <input type="file" id="file2" name="file2"/>
+   <input type="button" id="jquery-upload-button" value="Upload"/>
+  </form>
+
+  <div style="margin-bottom: 60px;">
+  <table id="table1" class="table">
+     <thead>
+       <tr>
+         <th id="table_heading">% Only In Other</th>
+         <th id="table_heading">% Only In Base</th>
+         <th id="table_heading">% Both</th>
+         <th id="table_heading">% Both: % favouring Other</th>
+         <th id="table_heading">% Both: % favouring Base</th>
+         <th id="table_heading">% Both: % Same</th>
+       </tr>
+     </thead>
+   </table>
+
+  </div> 
+
+   <table id="table" class="table">
+     <thead>
+       <tr>
+         <th id="table_heading">Org</th>
+         <th id="table_heading">Ip</th>
+         <th id="table_heading">Country</th>
+         <th id="table_heading">City</th>
+         <th id="table_heading">latitude</th>
+         <th id="table_heading">longitude</th>
+         <th id="table_heading">occurenceDifference</th>
+         <th id="table_heading">Favoured</th>
+         <th id="table_heading">Towards</th>
+       </tr>
+     </thead>
+   </table>
+
+</body>
+</html>
+
+
+ <!-- leaflet js-->
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+ <script>
+
+  var f = function(){
+    setInterval(function(){
+      $.ajax({
+        type:'GET',
+        url: "{% url 'getServerDifferences'%}",
+        responseType: 'json',
+        success: function(response){
+          
+          console.log(response)
+          // celaring the table and the map
+          var table = document.getElementById("table")
+
+          while(table.rows.length > 1){
+            table.deleteRow(1)
+          }
+          
+            for(var key in response.servers) {
+              var org = response.servers[key].org
+              var ip = response.servers[key].ip_address
+              var country = response.servers[key].country
+              var city = response.servers[key].city
+              var latitude = response.servers[key].latitude
+              var longitude = response.servers[key].longitude
+              var occurenceDifference = response.servers[key].occurenceDifference
+              var favoured = response.servers[key].favoured
+              var towards = response.servers[key].towards
+
+
+              var row = table.insertRow(1);
+
+              var cell_org = row.insertCell(0);
+              cell_org.innerHTML = org;
+
+              var cell_ip = row.insertCell(1);
+              cell_ip.innerHTML = ip;
+
+              var cell_country = row.insertCell(2);
+              cell_country.innerHTML = country;
+
+              var cell_city = row.insertCell(3);
+              cell_city.innerHTML = city;
+
+              var cell_latitude = row.insertCell(4);
+              cell_latitude.innerHTML = latitude;
+
+              var cell_longitude = row.insertCell(5);
+              cell_longitude.innerHTML = longitude;
+
+              var cell_occurenceDifference = row.insertCell(6);
+              cell_occurenceDifference.innerHTML = occurenceDifference;
+
+              var cell_favoured = row.insertCell(7);
+              cell_favoured.innerHTML = favoured;
+
+              var cell_towards = row.insertCell(8);
+              cell_towards.innerHTML = towards;
+         }
+          },
+        error: function(response){
+        alert('error getting all the servers');
+        }
+      })
+    }, 5000);
+    }
+    
+    var h = function(){
+    setInterval(function(){
+      $.ajax({
+        type:'GET',
+        url: "{% url 'getServerDifferencesSummary'%}",
+        responseType: 'json',
+        success: function(response){
+          
+          console.log(response)
+          // clearing the table so new data can be placed inside
+          var table = document.getElementById("table1")
+
+          while(table.rows.length > 1){
+            table.deleteRow(1)
+          }
+          
+          for(var key in response.servers){
+            // insert a row into the table
+            var row = table.insertRow(1);
+
+            // insert data the rows first column
+            var TotalOther = response.servers[key].TotalOther
+            var cell_TotalOther = row.insertCell(0);
+            cell_TotalOther.innerHTML = TotalOther;
+
+            var TotalBase = response.servers[key].TotalBase
+            var cell_TotalBase = row.insertCell(1);
+            cell_TotalBase.innerHTML = TotalBase;
+
+            var TotalInBoth = response.servers[key].TotalInBoth
+            var cell_TotalInBoth = row.insertCell(2);
+            cell_TotalInBoth.innerHTML = TotalInBoth;
+
+            var TotalInBothOther = response.servers[key].TotalInBothOther
+            var cell_TotalInBothOther = row.insertCell(3);
+            cell_TotalInBothOther.innerHTML = TotalInBothOther;
+
+            var TotalInBothBase = response.servers[key].TotalInBothBase
+            var cell_TotalInBothBase = row.insertCell(4);
+            cell_TotalInBothBase.innerHTML = TotalInBothBase;
+
+            var TotalInBothSame = response.servers[key].TotalInBothSame
+            var cell_TotalInBothSame = row.insertCell(4);
+            cell_TotalInBothSame.innerHTML = TotalInBothSame;
+        }
+          },
+        error: function(response){
+        alert('error getting all the servers');
+        }
+      })
+    }, 5000);
+    } 
+
+
+  $(document).ready(f());
+  $(document).ready(h());
+
+ </script>

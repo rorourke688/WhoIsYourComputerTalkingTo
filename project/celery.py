@@ -10,7 +10,7 @@ app.config_from_object('django.conf:settings', namespace='CODE')
 app.conf.beat_schedule = {
  'ever-10-seconds': {
    'task': 'sniffer.tasks.statement',
-   'schedule': 10,
+   'schedule': 30,
    'args': ()
  }
 }

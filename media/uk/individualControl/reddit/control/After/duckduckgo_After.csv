@@ -1,0 +1,7 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+4,5.66,600.5,849.24,0.5,0.71,1.4142,1.4142,1.4142,Virgin Media Limited,8.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0
+41.5,58.69,23941,33857.69,2.5,3.54,1.4142,1.4142,1.4142,APPLE-ENGINEERING,16.6
+1,1.41,52,73.54,0.5,0.71,1.4142,1.4142,1.4142,EDGECAST,2.0
+3.5,4.95,1360.5,1924.04,0.5,0.71,1.4142,1.4142,1.4142,MICROSOFT-CORP-MSN-AS-BLOCK,7.0
+1,1.41,52,73.54,0.5,0.71,1.4142,1.4142,1.4142,GOOGLE,2.0

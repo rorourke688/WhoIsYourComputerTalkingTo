@@ -1,0 +1,8 @@
+occurrences_mean,occurrences_std,bytes_mean,bytes_std,server_mean,server_std,bytes_co_var,occurrences_co_var,server_co_var,org,occurPerServer
+4,2.83,263,224.86,2,1.41,0.855,0.7071,0.7071,GOOGLE,2.0
+1.5,2.12,78,110.31,0.5,0.71,1.4142,1.4142,1.4142,EDGECAST,3.0
+3.5,3.54,232.5,200.11,1.5,0.71,0.8607,1.0102,0.4714,AMAZON-02,2.3333
+3.5,4.95,197.5,279.31,1,1.41,1.4142,1.4142,1.4142,AKAMAI-AS,3.5
+5,7.07,200,282.84,0.5,0.71,1.4142,1.4142,1.4142,CLOUDFLARENET,10.0
+0,0.0,0,0.0,0,0.0,-1.0,-1.0,-1.0,,0.0
+1,1.41,52,73.54,0.5,0.71,1.4142,1.4142,1.4142,Akamai International B.V.,2.0
